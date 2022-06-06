@@ -1,0 +1,42 @@
+from selenium import webdriver
+
+
+path = "/home/sanjju/Downloads/chromedriver_linux64/chromedriver"
+driver = webdriver.Chrome(path)
+
+def startpy():
+    driver.get("https://smazee.com/casestudy/blaer")
+    address = driver.find_element_by_xpath("/html/body/footer/div[2]/div/div[1]/div[1]/div/div[1]/p[2]")
+    print(address.text)
+    driver.maximize_window()
+
+
+
+
+
+startpy()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
