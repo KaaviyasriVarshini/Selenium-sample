@@ -8,26 +8,18 @@ driver = webdriver.Chrome(PATH)
 
 def startpy():
 
+    INFO = []
+
+    URL = "https://www.visualcapitalist.com/cp/ranked-the-best-selling-video-game-consoles-of-all-time/"
+    driver.get(URL)
+    driver.maximize_window()
     
-
-
-    driver.get("https://www.visualcapitalist.com/cp/ranked-the-best-selling-video-game-consoles-of-all-time/")
-    # driver.maximize_window()
-    # def write_csv(a, b,c, d):
-    #     file = open("data.csv","w")
-    #     data = {
-    #          "Rank" : a,
-    #          "Console" : b,
-    #          "Manufacturer" : c,
-    #          "Global lifetime sales" : d
-    #         }
-        
-    #     df = pd.DataFrame([data])
-    #     df.to_csv("data.csv")
-
 
     def visualcapitalist(n):
         for i in range(1, n):
+
+            DATA = {}
+
             rank = driver.find_element_by_xpath(f'//*[@id="tablepress-2347"]/tbody/tr[{i}]/td[1]')
             print(rank.text)
             console = driver.find_element_by_xpath(f'//*[@id="tablepress-2347"]/tbody/tr[{i}]/td[2]')
@@ -37,29 +29,29 @@ def startpy():
             global_lifetime_sales = driver.find_element_by_xpath(f'//*[@id="tablepress-2347"]/tbody/tr[{i}]/td[4]')
             print(global_lifetime_sales.text)
 
-        def write_csv(a, b,c, d):
-            # file = open("data.csv","x")
-            data = {
-                "Rank" : a,
-                "Console" : b,
-                "Manufacturer" : c,
-                "Global lifetime sales" : d
-                }
-            
-            df = pd.DataFrame([data])
-            df.to_csv("data.csv")
+
+        
+
+            DATA["RANK"] = [rank.text]
+            DATA["CONSOLE"] = [console.text]
+            DATA["manufacturer"] = [manufacturer.text]
+            DATA["global_lifetime"] = [global_lifetime_sales.text]
+            INFO.append(DATA)
+
+            df = pd.DataFrame.from_dict(INFO)
+            df.to_csv("data.csv", index = False, header = True)
 
 
 
-            visualcapitalist(11)
-            next = driver.find_element_by_xpath('//*[@id="tablepress-2347_next"]')
-            next.click()
-            visualcapitalist(11)
-            next_1 = driver.find_element_by_xpath('//*[@id="tablepress-2347_next"]')
-            next_1.click()
-            visualcapitalist(9)
-            
-        write_csv(rank, console, manufacturer, global_lifetime_sales)
+    visualcapitalist(11)
+    next = driver.find_element_by_xpath('//*[@id="tablepress-2347_next"]')
+    next.click()
+    visualcapitalist(11)
+    next_1 = driver.find_element_by_xpath('//*[@id="tablepress-2347_next"]')
+    next_1.click()
+    visualcapitalist(9)
+                
+        
 
 
     # if (next.click() != None):
